@@ -1,0 +1,19 @@
+# aiohttp for asynchronous HTTP requests
+aiohttp==3.8.1           # Allows us to handle multiple requests concurrently without blocking
+
+# cloudscraper to bypass Cloudflare protections
+cloudscraper==1.2.60     # Simplifies Cloudflare bypass with automated scraping
+
+# requests for handling HTTP requests with sessions (used with Tor integration)
+requests==2.26.0         # Makes HTTP requests simpler, often used with proxies for recon
+
+# stem for controlling Tor
+stem==1.8.0              # Used for managing Tor (e.g., IP rotation) in conjunction with proxies
+
+# Additional requirements for aiohttp's performance (optional but recommended)
+aiohttp[speedups]        # Speeds up aiohttp with optimized parsers
+cchardet==2.1.7          # Improves encoding detection with aiohttp
+aiodns==3.0.0            # Provides faster DNS resolution in aiohttp for async requests
+
+# Optional proxy support
+proxybroker==0.3.2       # (Optional) Allows for gathering and managing free proxies dynamically
