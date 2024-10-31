@@ -42,16 +42,18 @@ USERAGENTS_FILE = "useragents.txt"
 RESULTS_FILE = "hacked.txt"
 PROXIES_FILE = "proxies.txt"
 
+max_retries = 3  # Adjust this to your preference
+
 # Tor setup
 TOR_PROXY = 'socks5h://127.0.0.1:9050'
 controller = Controller.from_port(port=9051)
 
 def init_tor():
     try:
-        controller.authenticate()  # Assumes no password is set in torrc for control port
-        print("[INFO] Tor connection authenticated.")
+        controller.authenticate(password="your_password")  # replace with your password
+        print(Fore.GREEN + f"[INFO] Tor connection authenticated.")
     except:
-        print(Fore.RED + "[ERROR] Tor authentication failed. Ensure Tor is running.")
+        print("[ERROR] Tor authentication failed. Ensure Tor is running.")
 
 def renew_tor_ip():
     controller.signal(Signal.NEWNYM)
@@ -87,7 +89,7 @@ async def check_proxy(proxy, session):
 async def test_proxies(proxies):
     async with aiohttp.ClientSession() as session:
         active_proxies = []
-        for proxy in proxies:
+        for proxy in proxies[:max_retries]:  # Limit retries
             proxy_url = f'socks5://{proxy}'
             if await check_proxy(proxy_url, session):
                 active_proxies.append(proxy)

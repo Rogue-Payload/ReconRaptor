@@ -138,6 +138,53 @@ test.example.com
 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
 ```
+
+## 🛠️ Troubleshooting
+
+If you encounter issues while setting up or running ReconRaptor, here are some steps to resolve them.
+
+### Activating the ReconRaptor Conda Environment
+Ensure you have created and activated the `ReconRaptor` environment with the necessary dependencies:
+
+```bash
+# Activate the environment (assuming you've set it up with `conda create -n ReconRaptor python=3.10`)
+conda activate ReconRaptor
+```
+_This ensures all required packages and dependencies are properly isolated within the environment._
+
+
+### Configuring Tor with Correct torrc Settings
+
+For ReconRaptor to use Tor’s control port, certain settings must be enabled in the torrc file:
+- Locate and Edit torrc: The Tor configuration file (torrc) is usually located at /etc/tor/torrc on Linux systems.
+```bash
+sudo nano /etc/tor/torrc
+```
+Modify torrc for ControlPort and Authentication: Add the following lines to enable the ControlPort and disable CookieAuthentication:
+```plaintext
+ControlPort 9051
+CookieAuthentication 0
+```
+Alternatively, if you want to secure the control port with a password, generate a hashed password and use it here:
+```bash
+tor --hash-password "your_password"
+```
+Then add this to torrc:
+```plaintext
+ControlPort 9051
+HashedControlPassword <hashed_password_output>
+```
+Restart Tor to Apply Changes: After modifying torrc, restart the Tor service:
+```bash
+sudo systemctl restart tor
+```
+Verify Tor Setup: Confirm Tor is running and listening on the correct port by checking:
+```bash
+netstat -tuln | grep 9051
+```
+Following these steps ensures that ReconRaptor has the necessary permissions to connect to Tor’s control port and can rotate IPs as expected during scanning.
+
+
 ## 🤝 Contributing
 Contributions are welcome! Feel free to fork the repository and submit a pull request. Please ensure that your code is well-documented and tested.
 
