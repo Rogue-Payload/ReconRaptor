@@ -17,3 +17,6 @@ aiodns==3.0.0            # Provides faster DNS resolution in aiohttp for async r
 
 # Optional proxy support
 proxybroker==0.3.2       # (Optional) Allows for gathering and managing free proxies dynamically
+
+# Additional Tools
+colorama
